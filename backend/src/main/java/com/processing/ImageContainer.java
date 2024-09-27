@@ -49,14 +49,14 @@ public class ImageContainer {
     public static void main(String[] args) {
         try {
             // Example usage
-            ImageContainer image = new ImageContainer("resources/file_example_JPG_500kB.jpg");
+            ImageContainer image = new ImageContainer("backend/src/main/resources/file_example_JPG_500kB.jpg");
             ImageContainer resizedImage = ImageProcessor.resizeImage(image, 100, 100);
 
             // Export as original size JPG
-            image.exportImage("resources/output.jpg", "jpg");
+            image.exportImage("backend/src/main/resources/output.jpg", "jpg");
 
             // Export as resized PNG
-            resizedImage.exportImage("resources/output.png", "png");
+            resizedImage.exportImage("backend/src/main/resources/output.png", "png");
         } catch (IOException e) {
             e.printStackTrace();
         }
