@@ -1,7 +1,6 @@
 package com.processing;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +14,10 @@ public class ImageContainer {
         loadImage(imagePath);
     }
 
+    public ImageContainer(BufferedImage newImage) {
+        image = newImage;
+    }
+
     // Method to load the image from a file
     private void loadImage(String imagePath) throws IOException {
         File imageFile = new File(imagePath);
@@ -25,23 +28,10 @@ public class ImageContainer {
         System.out.println("Image loaded successfully.");
     }
 
-    // Method to resize the image if needed
-    public BufferedImage resizeImage(int newWidth, int newHeight) {
-        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, image.getType());
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(image, 0, 0, newWidth, newHeight, null);
-        g.dispose();
-        return resizedImage;
-    }
 
     // Method to export the image to a file
-    public void exportImage(String outputFilePath, String format, int width, int height) throws IOException {
+    public void exportImage(String outputFilePath, String format) throws IOException {
         BufferedImage imageToExport = image;
-
-        // Resize image if new dimensions are provided
-        if (width > 0 && height > 0) {
-            imageToExport = resizeImage(width, height);
-        }
 
         File outputFile = new File(outputFilePath);
         boolean success = ImageIO.write(imageToExport, format, outputFile);
@@ -59,13 +49,14 @@ public class ImageContainer {
     public static void main(String[] args) {
         try {
             // Example usage
-            ImageContainer processor = new ImageContainer("resources/file_example_JPG_500kB.jpg");
+            ImageContainer image = new ImageContainer("resources/file_example_JPG_500kB.jpg");
+            ImageContainer resizedImage = ImageProcessor.resizeImage(image, 100, 100);
 
-            // Export as resized JPG
-            processor.exportImage("resources/output.jpg", "jpg", 800, 600);
+            // Export as original size JPG
+            image.exportImage("resources/output.jpg", "jpg");
 
-            // Export as original size PNG
-            processor.exportImage("resources/output.png", "png", -1, -1);  // Passing -1 means keep original size
+            // Export as resized PNG
+            resizedImage.exportImage("resources/output.png", "png");
         } catch (IOException e) {
             e.printStackTrace();
         }
