@@ -49,7 +49,7 @@ public class ImageContainer {
     public static void main(String[] args) {
         try {
             // Example usage
-            ImageContainer image = new ImageContainer("backend/src/main/resources/file_example_JPG_500kB.jpg");
+            ImageContainer image = new ImageContainer("backend/src/main/resources/file_examples/file_example_JPG.jpg");
             ImageContainer resizedImage = ImageProcessor.resizeImage(image, 100, 100);
 
             // Export as original size JPG
